@@ -2,11 +2,8 @@ package io.angstrom.smally
 
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 import org.scalatest.WordSpec
 
-@RunWith(classOf[JUnitRunner])
 class RespondSpec extends WordSpec with MockFactory with ShouldMatchers {
 
   "Fully Qualify URL" should {

@@ -4,5 +4,6 @@ target/
 *.releaseBackup
 release.properties
 *.iml
+*.iws
 *.ipr
 .idea/

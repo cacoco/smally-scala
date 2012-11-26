@@ -112,16 +112,12 @@
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.1</version>
-    </dependency>
-    <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_${scala.version}</artifactId>
       <version>1.7.2</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.scalamock</groupId>
       <artifactId>scalamock-scalatest-support_${scala.version}</artifactId>

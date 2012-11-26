@@ -1,7 +1,7 @@
 import io.angstrom.smally.config.SmallyConfig
 
 new SmallyConfig {
-  port = 8080
+  port = 9090
   name = "smally"
 
   redisHost = "localhost"
