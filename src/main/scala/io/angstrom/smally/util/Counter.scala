@@ -1,7 +1,7 @@
-package io.angstrom.scala.smally
+package io.angstrom.smally.util
 
-import com.twitter.finagle.redis.util._
 import com.twitter.finagle.redis.Client
+import com.twitter.finagle.redis.util._
 
 object Counter {
   private val InitialValue = 10000000L; // (ten million)
@@ -11,6 +11,7 @@ object Counter {
 }
 
 class Counter(client: Client) {
+
   import Counter._
 
   private val _key = StringToChannelBuffer(CounterKey)

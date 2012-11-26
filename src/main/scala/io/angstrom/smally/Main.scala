@@ -1,7 +1,7 @@
-package io.angstrom.scala.smally
+package io.angstrom.smally
 
-import com.twitter.ostrich.admin.{ServiceTracker, RuntimeEnvironment}
 import com.twitter.logging.Logger
+import com.twitter.ostrich.admin.{ServiceTracker, RuntimeEnvironment}
 
 
 object Main {

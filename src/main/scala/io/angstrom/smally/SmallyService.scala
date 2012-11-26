@@ -1,12 +1,13 @@
-package io.angstrom.scala.smally
+package io.angstrom.smally
 
+import com.twitter.finagle.Service
 import com.twitter.finagle.builder.{ServerBuilder, Server}
 import com.twitter.finagle.http.{Response, Http, Request, RichHttp}
-import java.net.InetSocketAddress
-import com.twitter.finagle.stats.OstrichStatsReceiver
 import com.twitter.finagle.redis.Client
+import com.twitter.finagle.stats.OstrichStatsReceiver
 import com.twitter.logging.Logger
-import com.twitter.finagle.Service
+import java.net.InetSocketAddress
+import util.Counter
 
 trait SmallyService {
   val port: Int

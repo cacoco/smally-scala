@@ -4,22 +4,14 @@
   <artifactId>smally</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>${project.artifactId}</name>
-  <description>An Project</description>
+  <description>URL shortener in Scala using Finagle</description>
   <inceptionYear>2012</inceptionYear>
-  <url>http://github.com/path/to/project</url>
-
-  <distributionManagement>
-    <repository>
-      <id>your-repo</id>
-      <url>scpexe://your@your/maven_repo/</url>
-      <layout>default</layout>
-    </repository>
-  </distributionManagement>
+  <url>http://github.com/cacoco/smally-scala</url>
 
   <scm>
-    <connection>scm:git:git@github.com:path/to/project.git</connection>
-    <url>scm:git:git@github.com:path/to/project.git</url>
-    <developerConnection>scm:git:git@github.com:path/to/project.git</developerConnection>
+    <connection>scm:git:git@github.com:cacoco/smally-scala.git</connection>
+    <url>scm:git:git@github.com:cacoco/smally-scala.git</url>
+    <developerConnection>scm:git:git@github.com:cacoco/smally-scala.git</developerConnection>
   </scm>
 
   <licenses>
@@ -120,42 +112,26 @@
     </dependency>
 
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_${scala.version}</artifactId>
       <version>1.7.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scalamock</groupId>
+      <artifactId>scalamock-scalatest-support_${scala.version}</artifactId>
+      <version>2.4</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>
 
   <!-- END DEPENDENCIES -->
-
-  <!-- GPG JAR SIGNING -->
-
-  <profiles>
-    <profile>
-      <id>sign</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.2</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
-  <!-- END GPG JAR SIGNING -->
 
   <!-- SCALADOC -->
   <reporting>
@@ -190,17 +166,13 @@
           <launchers>
             <launcher>
               <id>main</id>
-              <mainClass>io.angstrom.scala.smally.Main</mainClass>
-              <jvmArgs>
-                <jvmArg>-Xdebug</jvmArg>
-                <jvmArg>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArg>
-              </jvmArgs>
+              <mainClass>io.angstrom.smally.Main</mainClass>
               <Args>
                 <Arg>-f</Arg>
                 <Arg>${project.basedir}/src/main/config/development_config.scala</Arg>
               </Args>
             </launcher>
-            <!-- you could define other launcher -->
+            <!-- you can define other launchers -->
           </launchers>
         </configuration>
         <executions>
@@ -230,7 +202,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>io.angstrom.scala.smally.Main</mainClass>
+              <mainClass>io.angstrom.smally.Main</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -323,4 +295,80 @@
     <!-- END EXTENSIONS -->
 
   </build>
+
+  <profiles>
+    <!-- GPG JAR SIGNING -->
+    <profile>
+      <id>sign</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- END GPG JAR SIGNING -->
+    <profile>
+      <id>debug</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>net.alchim31.maven</groupId>
+            <artifactId>scala-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+              <recompileMode>incremental</recompileMode>
+              <args>
+                <arg>-unchecked</arg>
+                <arg>-deprecation</arg>
+                <arg>-explaintypes</arg>
+              </args>
+              <launchers>
+                <launcher>
+                  <id>main</id>
+                  <mainClass>io.angstrom.smally.Main</mainClass>
+                  <jvmArgs>
+                    <jvmArg>-Xdebug</jvmArg>
+                    <jvmArg>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArg>
+                  </jvmArgs>
+                  <Args>
+                    <Arg>-f</Arg>
+                    <Arg>${project.basedir}/src/main/config/development_config.scala</Arg>
+                  </Args>
+                </launcher>
+                <!-- you could define other launcher -->
+              </launchers>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>compile</goal>
+                  <goal>testCompile</goal>
+                </goals>
+                <configuration>
+                  <args>
+                    <arg>-make:transitive</arg>
+                    <arg>-dependencyfile</arg>
+                    <arg>${project.build.directory}/.scala_dependencies</arg>
+                  </args>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

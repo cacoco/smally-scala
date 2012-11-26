@@ -1,15 +1,13 @@
-package io.angstrom.scala.smally
-
-import config.ServerConfig
+package io.angstrom.smally
 
 import com.twitter.conversions.time._
-import com.twitter.ostrich.admin.{Service => OstrichService}
 import com.twitter.finagle.builder.ClientBuilder
 import com.twitter.finagle.redis.{TransactionalClient, Redis}
-import com.twitter.finagle.http.Request
+import com.twitter.ostrich.admin.{Service => OstrichService}
+import config.SmallyConfig
 
 
-class SmallyServer(config: ServerConfig) extends OstrichService with SmallyService {
+class SmallyServer(config: SmallyConfig) extends OstrichService with SmallyService {
   require(config != null, "Config must be specified")
 
   val port = config.port.value

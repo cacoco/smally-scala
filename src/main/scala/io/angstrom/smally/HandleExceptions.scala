@@ -1,12 +1,12 @@
-package io.angstrom.scala.smally
+package io.angstrom.smally
 
+import com.twitter.finagle.http.{Response, Request}
+import com.twitter.finagle.{Service, SimpleFilter}
+import org.jboss.netty.buffer.ChannelBuffers.copiedBuffer
 import org.jboss.netty.handler.codec.http.HttpResponseStatus._
 import org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1
-import org.jboss.netty.buffer.ChannelBuffers.copiedBuffer
-import org.jboss.netty.util.CharsetUtil.UTF_8
-import com.twitter.finagle.{Service, SimpleFilter}
 import org.jboss.netty.handler.codec.http._
-import com.twitter.finagle.http.{Response, Request}
+import org.jboss.netty.util.CharsetUtil.UTF_8
 
 class HandleExceptions extends SimpleFilter[Request, Response] {
   def apply(request: Request, service: Service[Request, Response]) = {

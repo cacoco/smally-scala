@@ -1,6 +1,6 @@
-import io.angstrom.scala.smally.config.ServerConfig
+import io.angstrom.smally.config.SmallyConfig
 
-new ServerConfig {
+new SmallyConfig {
   port = 8080
   name = "smally"
 
