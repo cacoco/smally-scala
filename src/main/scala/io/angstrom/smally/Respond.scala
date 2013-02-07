@@ -26,40 +26,36 @@ object Respond {
     }
   }
 
-  protected[smally] def toJson(fields: Tuple2[String, String]*): String = {
+  protected[smally] def toJson(fields: (String, String)*): String = {
     val _map = fields.foldLeft(Map[String, String]())((m, t) => m + t)
     JSONObject(_map).toString()
   }
 
-  private[Respond] def handleResponse(status: HttpResponseStatus): Future[Response] = {
+  private[Respond] def handleResponse(
+    status: HttpResponseStatus
+  ): Future[Response] = {
     handleResponse(status, None, None)
   }
 
-  private[Respond] def handleResponse(status: HttpResponseStatus,
-                                      headers:Tuple2[String, String]*): Future[Response] = {
+  private[Respond] def handleResponse(
+    status: HttpResponseStatus,
+    headers: (String, String)*
+  ): Future[Response] = {
     handleResponse(status, None, None, headers:_*)
   }
 
-  private[Respond] def handleResponse(status: HttpResponseStatus,
-                                      content: Option[String],
-                                      mediaType: Option[MediaType],
-                                      headers:Tuple2[String, String]*): Future[Response] = {
+  private[Respond] def handleResponse(
+    status: HttpResponseStatus,
+    content: Option[String],
+    mediaType: Option[MediaType],
+    headers: (String, String)*
+  ): Future[Response] = {
     val response = Response(new DefaultHttpResponse(HTTP_1_1, status))
-    content match {
-      case Some(x) =>
-        response.write(x + '\n')
-      case None => // do nothing to response
-    }
-    mediaType match {
-      case Some(x) => response.mediaType = x.toString
-      case None => // do nothing to response
-    }
-    headers foreach {
-      case (k, v) =>
-        response.addHeader(k, v)
-    }
+    for (content <- content) { response.write(content + '\n') }
+    for (mediaType <- mediaType) { response.mediaType = mediaType.toString }
+    headers.foreach(t => response.addHeader(t._1, t._2))
 
-    Future(response)
+    Future.value(response)
   }
 }
 
