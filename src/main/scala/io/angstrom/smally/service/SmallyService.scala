@@ -1,4 +1,4 @@
-package io.angstrom.smally
+package io.angstrom.smally.service
 
 import com.google.common.net.MediaType
 import com.twitter.finagle.Service
@@ -9,18 +9,17 @@ import com.twitter.util.Future
 import org.jboss.netty.handler.codec.http.HttpResponseStatus._
 import org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1
 import org.jboss.netty.handler.codec.http.{HttpResponseStatus, DefaultHttpResponse}
-import scala.Some
 import scala.util.parsing.json.JSONObject
-import util.Counter
+import io.angstrom.smally.util.Counter
 
 
-object Respond {
+object SmallyService {
   private val EncodingRadix = 32
   private val key = "url-"
 
   protected[smally] def fullyQualifyUrl(url: String): String = {
     if (!(url.startsWith("http"))) {
-      "http://"+url
+      "http://%s".format(url)
     } else {
       url
     }
@@ -31,38 +30,38 @@ object Respond {
     JSONObject(_map).toString()
   }
 
-  private[Respond] def handleResponse(
+  private def handleResponse(
     status: HttpResponseStatus
   ): Future[Response] = {
     handleResponse(status, None, None)
   }
 
-  private[Respond] def handleResponse(
+  private def handleResponse(
     status: HttpResponseStatus,
     headers: (String, String)*
   ): Future[Response] = {
     handleResponse(status, None, None, headers:_*)
   }
 
-  private[Respond] def handleResponse(
+  private def handleResponse(
     status: HttpResponseStatus,
     content: Option[String],
     mediaType: Option[MediaType],
     headers: (String, String)*
   ): Future[Response] = {
     val response = Response(new DefaultHttpResponse(HTTP_1_1, status))
-    for (content <- content) { response.write(content + '\n') }
-    for (mediaType <- mediaType) { response.mediaType = mediaType.toString }
-    headers.foreach(t => response.addHeader(t._1, t._2))
+    content map {content => response.write(content + '\n') }
+    mediaType map {mediaType => response.mediaType = mediaType.toString }
+    headers foreach { case (key, value) => response.addHeader(key, value) }
 
     Future.value(response)
   }
 }
 
-class Respond(client: Option[Client], counter: Counter)
+class SmallyService(client: Option[Client], counter: Counter)
   extends Service[Request, Response] {
 
-  import Respond._
+  import SmallyService._
 
   def apply(request: Request) = {
     client match {

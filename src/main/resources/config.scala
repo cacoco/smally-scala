@@ -1,6 +1,6 @@
-import io.angstrom.smally.config.SmallyConfig
+import io.angstrom.smally.Config
 
-new SmallyConfig {
+new Config {
   port = 9090
   name = "smally"
 

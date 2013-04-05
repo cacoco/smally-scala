@@ -9,7 +9,7 @@ object Main {
 
   def main(args: Array[String]) {
     val runtime = RuntimeEnvironment(this, args)
-    val server = runtime.loadRuntimeConfig[SmallyServer]()
+    val server = runtime.loadRuntimeConfig[Server]()
     try {
       log.info("Starting service")
       server.start()

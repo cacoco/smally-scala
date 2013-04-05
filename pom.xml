@@ -165,7 +165,7 @@
               <mainClass>io.angstrom.smally.Main</mainClass>
               <Args>
                 <Arg>-f</Arg>
-                <Arg>${project.basedir}/src/main/config/development_config.scala</Arg>
+                <Arg>${project.basedir}/src/main/resources/config.scala</Arg>
               </Args>
             </launcher>
             <!-- you can define other launchers -->
@@ -341,7 +341,7 @@
                   </jvmArgs>
                   <Args>
                     <Arg>-f</Arg>
-                    <Arg>${project.basedir}/src/main/config/development_config.scala</Arg>
+                    <Arg>${project.basedir}/src/main/resources/config.scala</Arg>
                   </Args>
                 </launcher>
                 <!-- you could define other launcher -->
